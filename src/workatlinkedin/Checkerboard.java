@@ -31,9 +31,23 @@ public class Checkerboard {
     public void print() {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
-                System.out.print(read(row, col));
+                printer.print(read(row, col));
             }
-            System.out.println();
+            printer.println();
         }
+    }
+
+    public Checkerboard copy() {
+        Checkerboard dst = new Checkerboard(rows, columns);
+        System.arraycopy(board, 0, dst.board, 0, board.length);
+        return dst;
+    }
+
+    public int countRows() {
+        return rows;
+    }
+
+    public int countColumns() {
+        return columns;
     }
 }
