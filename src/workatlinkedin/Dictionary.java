@@ -10,7 +10,8 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
 
     private final Pattern pattern;
     private final StringBuilder buffer;
-    private final List<CharSequence> words = new ArrayList<>();
+
+    private List<CharSequence> words;
 
     public Dictionary(String regex, int length) {
         pattern = Pattern.compile(regex);
@@ -19,7 +20,7 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
     }
 
     public void generate() {
-        words.clear();
+        words = new ArrayList<>();
         next(0);
     }
 
@@ -41,11 +42,13 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
     }
 
     public int size() {
+        checkState();
         return words.size();
     }
 
     @Override
     public Iterator<CharSequence> iterator() {
+        checkState();
         return words.iterator();
     }
 
@@ -57,5 +60,10 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
     @Override
     public String toString() {
         return pattern.toString();
+    }
+
+    private void checkState() {
+        if (words == null)
+            throw new RuntimeException("This dictionary has not been filled. You must call .generate()");
     }
 }
