@@ -19,7 +19,7 @@ public class WorkAtLinkedInSolution {
         solver.solve();
 
         for (Checkerboard checkerboard : solver) {
-            checkerboard.print();
+            checkerboard.print(System.out);
         }
     }
 }

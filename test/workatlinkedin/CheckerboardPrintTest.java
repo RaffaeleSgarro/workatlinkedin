@@ -13,6 +13,6 @@ public class CheckerboardPrintTest {
             }
         }
 
-        checkerboard.print();
+        checkerboard.print(System.out);
     }
 }

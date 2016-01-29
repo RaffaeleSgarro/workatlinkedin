@@ -4,11 +4,12 @@ import java.io.PrintStream;
 
 public class Checkerboard {
 
+    /**
+     * Current status of board, arranged row-major
+     */
     private final char[] board;
     private final int rows;
     private final int columns;
-
-    private PrintStream printer = System.out;
 
     public Checkerboard(int rows, int columns) {
         this.rows = rows;
@@ -28,7 +29,7 @@ public class Checkerboard {
         return board[translate(row, col)];
     }
 
-    public void print() {
+    public void print(PrintStream printer) {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
                 printer.print(read(row, col));
