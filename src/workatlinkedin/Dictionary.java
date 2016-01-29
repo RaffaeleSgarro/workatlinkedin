@@ -25,17 +25,14 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
     }
 
     private void next(int index) {
-        if (index == buffer.length() - 1) {
-            for (char c = 'A'; c <= 'Z'; c++) {
-                buffer.setCharAt(index, c);
+        for (char c = 'A'; c <= 'Z'; c++) {
+            buffer.setCharAt(index, c);
+            if (index == buffer.length() - 1) {
                 Matcher matcher = pattern.matcher(buffer);
                 if (matcher.matches()) {
                     words.add(buffer.toString());
                 }
-            }
-        } else {
-            for (char c = 'A'; c <= 'Z'; c++) {
-                buffer.setCharAt(index, c);
+            } else {
                 next(index + 1);
             }
         }
