@@ -2,7 +2,7 @@ package workatlinkedin;
 
 import java.util.Iterator;
 
-public class Hint implements Iterable<CharSequence> {
+public class Hint implements Iterable<CharSequence>, Comparable<Hint> {
 
     private final boolean horizontal;
     private final int index;
@@ -27,7 +27,12 @@ public class Hint implements Iterable<CharSequence> {
         return dictionary.iterator();
     }
 
-    public boolean isVertical() {
-        return !horizontal;
+    public void computeDictionary() {
+        dictionary.generate();
+    }
+
+    @Override
+    public int compareTo(Hint that) {
+        return dictionary.size() - that.dictionary.size();
     }
 }

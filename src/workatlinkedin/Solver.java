@@ -6,65 +6,28 @@ public class Solver implements Iterable<Checkerboard> {
 
     private final int rows;
     private final int columns;
-    private final Dictionary[] horizontalHints;
-    private final Dictionary[] verticalHints;
+    private final List<Hint> hints = new ArrayList<>();
 
     private List<Checkerboard> solutions;
-    private List<Hint> hints;
     private Stack<Checkerboard> layers;
 
     public Solver(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
-        horizontalHints = new Dictionary[rows];
-        verticalHints = new Dictionary[columns];
     }
 
     public void solve() {
         solutions = new ArrayList<>();
-        hints = new ArrayList<>();
         layers = new Stack<>();
 
-        List<Dictionary> dictionaries = new ArrayList<>();
-
-        Collections.addAll(dictionaries, horizontalHints);
-        Collections.addAll(dictionaries, verticalHints);
-
-        for (Dictionary dictionary : dictionaries) {
-            dictionary.generate();
+        for (Hint hint : hints) {
+            hint.computeDictionary();
         }
 
-        Collections.sort(dictionaries);
-
-        for (Dictionary dictionary : dictionaries) {
-            int rowIndexFromTop = indexOf(horizontalHints, dictionary);
-
-            boolean isHorizontal;
-            int index;
-
-            if (rowIndexFromTop >= 0) {
-                isHorizontal = true;
-                index = rowIndexFromTop;
-            } else {
-                isHorizontal = false;
-                index = indexOf(verticalHints, dictionary);
-            }
-
-            hints.add(new Hint(isHorizontal, index, dictionary));
-        }
+        Collections.sort(hints);
 
         layers.push(new Checkerboard(rows, columns));
         walkTree(0);
-    }
-
-    private int indexOf(Object[] arr, Object object) {
-        for (int i = 0; i < arr.length; i++) {
-            if (object.equals(arr[i])) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 
     private void walkTree(int depth) {
@@ -94,10 +57,10 @@ public class Solver implements Iterable<Checkerboard> {
     }
 
     public void setHorizontalHint(int rowIndexFromTop, String regex) {
-        horizontalHints[rowIndexFromTop] = new Dictionary(regex, columns);
+        hints.add(new Hint(true, rowIndexFromTop, new Dictionary(regex, columns)));
     }
 
     public void setVerticalHint(int columnIndexFromLeft, String regex) {
-        verticalHints[columnIndexFromLeft] = new Dictionary(regex, rows);
+        hints.add(new Hint(false, columnIndexFromLeft, new Dictionary(regex, rows)));
     }
 }

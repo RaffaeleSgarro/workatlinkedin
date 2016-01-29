@@ -1,7 +1,6 @@
 package workatlinkedin;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DictionaryTest {
@@ -26,8 +25,6 @@ public class DictionaryTest {
         for (Dictionary dictionary : dictionaries) {
             dictionary.generate();
         }
-
-        Collections.sort(dictionaries);
 
         for (Dictionary dictionary : dictionaries) {
             System.out.println("Generated " + dictionary.size() + " words for dictionary " + dictionary.toString());

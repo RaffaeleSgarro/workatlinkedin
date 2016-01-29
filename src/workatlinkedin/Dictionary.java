@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence> {
+public class Dictionary implements Iterable<CharSequence> {
 
     private final Pattern pattern;
     private final StringBuilder buffer;
@@ -47,11 +47,6 @@ public class Dictionary implements Comparable<Dictionary>, Iterable<CharSequence
     public Iterator<CharSequence> iterator() {
         checkState();
         return words.iterator();
-    }
-
-    @Override
-    public int compareTo(Dictionary that) {
-        return size() - that.size();
     }
 
     @Override
